@@ -3,7 +3,7 @@ import urllib.request
 import json
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 # ================== 配置区域 ==================
 OUTPUT_CSV = "gmb_eta_data.csv"
@@ -53,7 +53,10 @@ def main():
     print("-" * 60)
 
     file_exists = os.path.isfile(OUTPUT_CSV)
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # 使用香港时区 UTC+8
+    hong_kong_tz = timezone(timedelta(hours=8))
+    current_time = datetime.now(hong_kong_tz).strftime("%Y-%m-%d %H:%M:%S")
     print(f"[{current_time}] 开始采集...")
     
     rows_to_write = []
